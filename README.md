@@ -1,5 +1,23 @@
 # Classroom Attention Monitoring System
 
+这个仓库是 [PresenterPlus](https://github.com/higuo2/PresenterPlus) 的专注度后端，放在个人账号下，方便另一台电脑单独克隆。检测、计分和原来的仪表盘来自 [dushyantbaroliya/classroom-attention-monitor](https://github.com/dushyantbaroliya/classroom-attention-monitor)。虚拟环境、数据库和模型权重不在 Git 里。
+
+## 配合 PresenterPlus
+
+克隆到 PresenterPlus 仓库里面，文件夹名保持 `classroom-attention-monitor`。需要 Python 3.12。第一次：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe scripts/download_models.py
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe -m uvicorn backend.app.asgi:app --host 127.0.0.1 --port 8000
+```
+
+然后在 PresenterPlus 目录执行 `pnpm dev`，打开 http://localhost:8443/attention 。PresenterPlus 会把 `/cam` 转到本机 `8000`。
+
+---
+
 Real-time estimation of **observable classroom engagement** from webcam or
 recorded video. Detects and anonymously tracks each student, estimates head
 pose, blinks/drowsiness, gaze direction, phone usage and hand raises, fuses
